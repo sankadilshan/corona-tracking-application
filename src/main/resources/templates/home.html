@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>corona virus tracking application</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" type="text/css" media="all"
+          href="../../../css/gtvg.css" th:href="@{/css/gtvg.css}"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <style>
+      h3{
+     color: teal;
+       }
+       #p1{
+       margin-left:2rem
+       }
+       .div1{
+        color: black;
+        position: absolute;
+        top:14rem;
+        left:34rem;
+       }
+        .div2{
+          position:absolute;
+          top:14rem;
+          left:61rem;
+        }
+        .time{
+         color:teal;
+         position:relative;
+         top:-39px;
+         margin-left:17rem
+         }
+         .p1{
+          margin-left:15rem
+         }
+
+        .table{
+         width:68rem;
+         margin-left:8rem;
+
+        }
+        .t{
+         position:relative;
+         top:-7rem;
+         left:30rem;
+         width:28rem;
+
+        }
+        .btn-primary{
+        background-color: teal;
+         border-color: teal;
+          width: 10rem;
+          position: relative;
+           top: -54px;
+          left: 25rem;
+        }
+        .form-control{
+         width:31%
+        }
+        .jumbotron{
+         height:34rem
+        }
+
+
+
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="jumbotron">
+    <h1 class="display-4"><b>Corona Virus Tracking Application</b></h1>
+    <p class="lead">This is showing you current update of COVID-19 all around world</p>
+    <hr class="my-4">
+    <div>
+        <h3 class="display-3" th:text="${totalReportedCases}"></h3>
+        <p>Total cases reported as of Today :</p>
+        <p class="p1 time" th:text="${localeDate}"></p>
+    </div>
+    <div class="div1">
+        <h3 class="display-3" th:text="${difference}"></h3>
+        <p id="p1">increased cases</p>
+    </div>
+    <div class="div2">
+        <h3 class="display-3" th:text="${totalCasesYesterday}"></h3>
+        <p>Total cases reported as of Yesterday :</p>
+        <p class="time" th:text="${yesterday}"></p>
+    </div>
+    <div style="margin-top:3rem">
+    <div class="dropdown">
+        <form action="#" th:action="@{/home}" th:object="${search}" method="post">
+            <div class="form-group">
+                <select CLASS="form-control" th:field="*{value}">
+                    <option value=" N/A">select</option>
+                    <option
+                            th:each="country : ${allCountry}" th:value="${country}" th:text="${country}"></option>
+                </select>
+            </div>
+            <button class="btn btn-primary" tyepe="submit">submit</button>
+        </form>
+
+    </div>
+    <table class="table t">
+        <tr>
+            <th>Country</th>
+            <th>Total</th>
+            <th>Increasing (1 day)</th>
+        </tr>
+        <tr th:each="_country : ${searchValue}">
+            <td th:text="${_country.country}">N/A</td>
+            <td th:text="${_country.currentTotalCases}">0</td>
+            <td th:text="${_country.difference}">0</td>
+        </tr>
+    </table>
+</div>
+</div>
+
+<table class="table table-striped table-hover">
+    <tr>
+        <th>Province/State</th>
+        <th>Country/Region</th>
+        <th>CurrentTotalCases</th>
+        <th>Increasing</th>
+    </tr>
+    <tr th:each="locationState : ${locationStates}">
+        <td th:text="${locationState.state}">N/A</td>
+        <td th:text="${locationState.country}"></td>
+        <td th:text="${locationState.currentTotalCases}">0</td>
+        <td th:text="${locationState.difference}"></td>
+    </tr>
+</table>
+</body>
+
+</html>
